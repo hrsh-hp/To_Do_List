@@ -1,13 +1,17 @@
 package com.shivprakash.to_dolist;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,12 +26,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import android.content.pm.PackageManager;
 
@@ -52,6 +61,7 @@ public class AddTaskActivity extends AppCompatActivity {
     private Uri imageUri;
     private FusedLocationProviderClient fusedLocationClient;
     private double latitude, longitude;
+    private static final int CAMERA_REQUEST = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +110,26 @@ public class AddTaskActivity extends AppCompatActivity {
 
         selectTimeButton.setOnClickListener(v -> showTimePickerDialog());
 
-        selectImageButton.setOnClickListener(v -> openImageSelector());
+        selectImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddTaskActivity.this);
+                builder.setTitle("Choose an option");
+                String[] options = {"Take Photo", "Choose from Gallery"};
+
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0) {
+                            takePicture();
+                        } else if (which == 1) {
+                            openImageSelector();
+                        }
+                    }
+                });
+                builder.show();
+            }
+        });
 
         addTaskButton.setOnClickListener(v -> {
             if (addTask()) {
@@ -159,13 +188,29 @@ public class AddTaskActivity extends AppCompatActivity {
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
-    @Override
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+//            imageUri = data.getData();
+//            selectedImageView.setImageURI(imageUri);
+//            selectedImageView.setVisibility(View.VISIBLE);
+//        }
+//    }
+
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+            selectedImageView.setImageURI(imageUri);
+            selectedImageView.setVisibility(View.VISIBLE);
+
+
+        } else if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
             imageUri = data.getData();
             selectedImageView.setImageURI(imageUri);
             selectedImageView.setVisibility(View.VISIBLE);
+
         }
     }
 
@@ -242,6 +287,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission granted, get the location
@@ -250,5 +296,43 @@ public class AddTaskActivity extends AppCompatActivity {
                 Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void takePicture() {
+        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, 100);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        startActivity(cameraIntent);
+        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+            if (photoFile != null) {
+                imageUri = FileProvider.getUriForFile(
+                        this,
+                        "com.shivprakash.to_dolist.fileprovider",  // Change to your app's package name
+                        photoFile
+                );
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            }
+        }
+
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        return File.createTempFile(
+                imageFileName,
+                ".jpg",
+                storageDir
+        );
     }
 }
