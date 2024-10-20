@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/task_card"
     android:layout_width="match_parent"
@@ -12,13 +11,22 @@
         android:background="@drawable/shape"
         android:padding="16dp">
 
+        <!-- Add your ImageView here -->
+        <ImageView
+            android:id="@+id/task_image"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/task_image_desc" />
+
         <TextView
             android:id="@+id/text_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Task Name"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
 
         <View
             android:layout_width="match_parent"
@@ -37,7 +45,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date: May 14, 2024"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/text_time"
@@ -45,8 +54,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Time: 10:00 AM"
-                android:textSize="14sp" />
-
+                android:textSize="14sp"
+                android:textColor="@color/white"/>
         </LinearLayout>
 
         <TextView
@@ -55,7 +64,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Category: "
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textColor="@color/white"/>
 
         <TextView
             android:id="@+id/text_priority"
@@ -63,7 +73,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Priority: "
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textColor="@color/white"/>
 
         <TextView
             android:id="@+id/text_notes"
@@ -71,7 +82,27 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Notes: "
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textColor="@color/white"/>
+
+        <!-- Add coordinates TextViews -->
+        <TextView
+            android:id="@+id/text_latitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Latitude: "
+            android:textSize="14sp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/text_longitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Longitude: "
+            android:textSize="14sp"
+            android:textColor="@color/white"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -85,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="Done"
-                android:textColor="?attr/colorAccent"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
 
             <Button
@@ -95,7 +126,7 @@
                 android:layout_marginEnd="8dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:text="Edit"
-                android:textColor="?attr/colorAccent" />
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/btn_delete"
@@ -103,8 +134,7 @@
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
                 android:text="Delete"
-                android:textColor="?attr/colorAccent" />
-
+                android:textColor="@color/white"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

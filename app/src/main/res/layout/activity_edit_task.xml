@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".AddTaskActivity">
+    tools:context=".EditTaskActivity">
 
     <TextView
         android:id="@+id/text_view_task"
@@ -15,11 +15,19 @@
         android:text="Task:"
         android:textSize="18sp" />
 
+    <EditText
+        android:id="@+id/task_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_view_task"
+        android:layout_marginTop="8dp"
+        android:hint="Enter task name" />
+
     <TextView
         android:id="@+id/text_view_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_view_task"
+        android:layout_below="@id/task_edit_text"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
         android:text="Category:"
@@ -73,7 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/button_select_due_date"
         android:layout_marginTop="8dp"
-        android:text=""
+        android:text="No date selected"
         android:textSize="16sp" />
 
     <TextView
@@ -100,7 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/button_select_due_time"
         android:layout_marginTop="8dp"
-        android:text=""
+        android:text="No time selected"
         android:textSize="16sp" />
 
     <TextView
@@ -121,12 +129,27 @@
         android:layout_marginTop="8dp"
         android:hint="Update notes" />
 
+    <ImageView
+        android:id="@+id/selected_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/notes_edit_text"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Selected Image"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/button_edit_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Image"
+        android:layout_below="@id/selected_image_view"/>
+
     <Button
         android:id="@+id/button_add_task"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/notes_edit_text"
+        android:layout_below="@id/button_edit_image"
         android:layout_marginTop="16dp"
         android:text="Edit Task" />
-
 </RelativeLayout>

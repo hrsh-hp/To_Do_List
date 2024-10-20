@@ -6,7 +6,10 @@ public class Task {
     private String category;
     private String dueDate;
     private String dueTime;
+    private String imageUri;
     private boolean completed;
+    private double latitude;
+    private double longitude;
 
     public Task(String taskName, String priority, String category, String dueDate, String dueTime, String string, boolean completed) {
         this.taskName = taskName;
@@ -14,7 +17,10 @@ public class Task {
         this.category = category;
         this.dueDate = dueDate;
         this.dueTime = dueTime;
+        this.imageUri = imageUri;
         this.completed = completed;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getTaskName() {
@@ -57,12 +63,36 @@ public class Task {
         this.dueTime = dueTime;
     }
 
+    public String getImageUri() { // Getter for imageUri
+        return imageUri;
+    }
+
+    public void setImageUri(String imageUri) { // Setter for imageUri
+        this.imageUri = imageUri;
+    }
+
     public boolean isCompleted() {
         return completed;
     }
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
 

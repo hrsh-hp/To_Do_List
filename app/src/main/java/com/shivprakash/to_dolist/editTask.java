@@ -55,7 +55,7 @@ public class editTask extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       setContentView(R.layout.activity_edit_task);
+        setContentView(R.layout.activity_edit_task);
         intent = getIntent();
         task = intent.getStringExtra("task");
         text_view_task=findViewById(R.id.text_view_task);
@@ -180,5 +180,3 @@ public class editTask extends AppCompatActivity {
 
     }
 }
-
-

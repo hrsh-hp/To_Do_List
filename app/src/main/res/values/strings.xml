@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">To-Do List</string>
+    <string name="task_image_desc">Task Image</string>
     <string-array name="categories_array">
         <item>Work</item>
         <item>Personal</item>
         <item>Shopping</item>
+        <item>Other</item>
         <!-- Add more categories as needed -->
     </string-array>
 

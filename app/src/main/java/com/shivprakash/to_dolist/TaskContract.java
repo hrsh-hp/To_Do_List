@@ -14,7 +14,11 @@ public class TaskContract {
         public static final String COLUMN_NOTES = "notes";
         public static final String COLUMN_DUE_DATE = "due_date";
         public static final String COLUMN_DUE_TIME = "due_time";
+        public static final String COLUMN_IMAGE_URI = "image_uri";
         public static final String COLUMN_COMPLETED = "completed";
+        public static final String COLUMN_LATITUDE = "latitude";
+        public static final String COLUMN_LONGITUDE = "longitude";
+
     }
 }
 
